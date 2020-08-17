@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "gfpro-irrigation-control"
+version = "0.1"
+description = ""
+authors = ["Tomas Bayer <mail@tomas.berlin>"]
+readme = "README.md"
+license = "MIT"
+
+[tool.poetry.scripts]
+gfpro-irrigation-control-mqtt = 'gfpro_irrigation_control.cli:ValveControlMQTTDaemon.run'
+gfpro-irrigation-control = 'gfpro_irrigation_control.cli:ValveControlCLI.run'
+
+[tool.poetry.dependencies]
+python = "^3.7"
+bluepy = "^1.3.0"
+paho-mqtt = "^1.5.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
