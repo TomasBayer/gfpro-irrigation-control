@@ -17,7 +17,7 @@ class Diagnostics:
 
     @property
     def battery_level(self):
-        return max(min((self.battery_voltage - 2900) / 6.75, 0), 100)
+        return 100 * min(min((self.battery_voltage - 3100) / 750, 0), 1)
 
 
 class GFProBluetoothValve:
