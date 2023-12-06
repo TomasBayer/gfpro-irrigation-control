@@ -4,7 +4,7 @@ import threading
 import time
 from dataclasses import dataclass
 from itertools import count
-from typing import Any, Callable
+from typing import Any, Callable, Optional
 
 from bluepy.btle import Peripheral
 
@@ -21,7 +21,7 @@ class Diagnostics:
 
 
 class GFProBluetoothValve:
-    DEFAULT_PASSWORD = '123456'
+    DEFAULT_PASSWORD = '123456'  # noqa: S105
 
     PASSWORD_CHARACTERISTIC = 0x48
     TEMPERATURE_CHARACTERISTIC = 0x3b
@@ -68,7 +68,7 @@ class GFProBluetoothValve:
                 logging.debug("Authentication did not work. Trying again...")
                 time.sleep(0.5)
 
-    def autoconnect(self, attempts: int = None, delay: int = 5, post_connect_delay: float = 0.5):
+    def autoconnect(self, attempts: Optional[int] = None, delay: int = 5, post_connect_delay: float = 0.5):
         for attempt in count() if attempts is None else range(attempts):
             try:
                 self.connect()

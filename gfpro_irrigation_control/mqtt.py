@@ -1,6 +1,6 @@
 import logging
 import threading
-from typing import Union, Optional
+from typing import Optional, Union
 
 import paho.mqtt.client as mqtt
 
@@ -11,9 +11,17 @@ logger = logging.getLogger(__name__)
 
 class MQTTGFProBluetoothValveController:
 
-    def __init__(self, valve: Union[GFProBluetoothValve, str], name: Optional[str] = None,
-                 mqtt_host: str = "localhost", mqtt_port: int = 1883, mqtt_keep_alive: int = 60,
-                 valve_state_interval: int = 10, diagnostics_interval: int = 3600):
+    def __init__(
+            self,
+            valve: Union[GFProBluetoothValve, str],
+            *,
+            name: Optional[str] = None,
+            mqtt_host: str = "localhost",
+            mqtt_port: int = 1883,
+            mqtt_keep_alive: int = 60,
+            valve_state_interval: int = 10,
+            diagnostics_interval: int = 3600,
+    ):
 
         # Set up valve
         if isinstance(valve, str):
@@ -60,7 +68,7 @@ class MQTTGFProBluetoothValveController:
         self.client.publish(
             self.valve_state_topic,
             int(self.valve.is_open()),
-            retain=True
+            retain=True,
         )
 
     def publish_diagnostics(self):
@@ -70,12 +78,12 @@ class MQTTGFProBluetoothValveController:
         self.client.publish(
             self.base_topic.format(topic="battery_level"),
             int(diagnostics.battery_level),
-            retain=True
+            retain=True,
         )
         self.client.publish(
             self.base_topic.format(topic="battery_voltage"),
             diagnostics.battery_voltage,
-            retain=True
+            retain=True,
         )
 
     def _execute_periodically(self, function, description, interval):
@@ -91,11 +99,11 @@ class MQTTGFProBluetoothValveController:
 
             threading.Thread(
                 target=self._execute_periodically,
-                args=(self.publish_valve_state, "valve state", self.valve_state_interval)
+                args=(self.publish_valve_state, "valve state", self.valve_state_interval),
             ).start()
             threading.Thread(
                 target=self._execute_periodically,
-                args=(self.publish_diagnostics, "battery state", self.diagnostics_interval)
+                args=(self.publish_diagnostics, "battery state", self.diagnostics_interval),
             ).start()
 
     def stop_periodic_transmission(self):
