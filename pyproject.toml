@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "gfpro-irrigation-control"
 version = "0.1"
-description = ""
+description = "Bluetooth-LE-based remote control of GFPRO Eco irrigation valves"
 authors = ["Tomas Bayer <mail@tomas.berlin>"]
 readme = "README.md"
 license = "MIT"
